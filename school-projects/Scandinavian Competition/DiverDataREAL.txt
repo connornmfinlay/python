@@ -1,0 +1,5 @@
+D13,Falk T,Norway
+D2,Nielson C,Denmark
+D4,Salo N,Finland
+D7,Telander Z,Sweden
+D10,Magnusdottir B,Iceland

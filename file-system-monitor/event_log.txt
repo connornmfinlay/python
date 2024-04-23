@@ -1,0 +1,4 @@
+2023-05-14 19:18:11,416 - Event type: modified | Path: D:\Program Files (x86)\icon.ico
+2023-05-14 19:18:13,512 - Event type: created | Path: D:\Program Files (x86)\New folder
+2023-05-14 19:18:17,592 - Event type: moved | Path: D:\Program Files (x86)\New folder
+2023-05-14 19:18:17,622 - Event type: modified | Path: D:\Program Files (x86)\test
