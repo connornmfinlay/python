@@ -1,12 +1,10 @@
 from selenium import webdriver
 from selenium.webdriver import FirefoxOptions
-from selenium.webdriver.common.keys import Keys
+#from selenium.webdriver.common import service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support.ui import Select
+from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.action_chains import ActionChains
-import time
 import argparse
 
 # Pre-Reqs
@@ -20,24 +18,26 @@ groupname = args.group
 user = args.username
 secret = args.password
 
+s = Service("/usr/local/bin/geckodriver")
 homedirectory = "/mnt/project_data/" + groupname + "/transfer"
 opts = FirefoxOptions()
 opts.add_argument("--headless")
-driver = webdriver.Firefox(options=opts)
+driver = webdriver.Firefox(options=opts, service=s)
 driver.maximize_window()
-driver.get("https://eidf-mft.epcc.ed.ac.uk/?Command=Logout")
-
+driver.get("<serv-u-websiite domain")
+    
 #Log in Stage
 #driver.get("http://127.0.0.1:43958/?Command=Logout")
-
+    
 username_field = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "user-box-text")))
 password_field = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "pword-box-text")))
-
+    
 #username_field.send_keys("admin")
 #password_field.send_keys("admin")
-
+    
 username_field.send_keys(user)
-password_field.send_keys(secret)    
+password_field.send_keys(secret)
+    
     
 login_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, "btn-LoginButton")))
 login_button.click()
@@ -143,3 +143,4 @@ group_save_limit.click()
 group_name_save_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, "btn-SaveGroupButton")))
 group_name_save_button.click()
 
+print(f'Successfully created group: {groupname}')

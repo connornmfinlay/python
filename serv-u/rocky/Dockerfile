@@ -1,0 +1,36 @@
+FROM rockylinux/rockylinux:8.9
+
+WORKDIR /app
+
+RUN dnf update -y && dnf install -y \
+    wget \
+    python3.11 \
+    firefox \
+    gtk3-devel \
+    fontconfig
+
+#RUN wget https://download-installer.cdn.mozilla.net/pub/firefox/releases/125.0.1/linux-x86_64/en-US/firefox-125.0.1.tar.bz2 \
+#   && tar -xjf firefox-125.0.1.tar.bz2 \
+#   && mv firefox /opt/firefox \
+#   && ln -s /opt/firefox/firefox /usr/local/bin/firefox
+
+RUN wget https://github.com/mozilla/geckodriver/releases/download/v0.34.0/geckodriver-v0.34.0-linux64.tar.gz && \
+    tar -xvzf geckodriver-v0.34.0-linux64.tar.gz && \
+    mv geckodriver /usr/local/bin && \
+    chmod a+x /usr/local/bin/geckodriver && \
+    export PATH="usr/local/sbin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin" && \
+    export PATH="$PATH:/usr/local/bin/"
+
+RUN python3.11 -m ensurepip --upgrade
+RUN python3.11 -m pip install --upgrade pip
+
+RUN python3.11 -m pip install selenium argparse
+
+RUN echo "127.0.0.1 localhost >> /etc/hosts "
+
+COPY group-creation.py .
+
+RUN chmod 777 group-creation.py
+
+# Set the entrypoint to the Python script
+ENTRYPOINT ["python3", "group-creation.py"]
